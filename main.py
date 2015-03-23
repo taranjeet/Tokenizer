@@ -29,6 +29,10 @@ class Tokenizer():
 		'''return the number of tokens'''
 		return len(self.tokens)
 
+	def sentence_count(self):
+		'''return the number of sentences'''
+		return len(self.sentences)
+
 	def unique_tokens_count(self):
 		'''returns the number of unique tokens'''
 		return len(set(self.tokens))
@@ -87,6 +91,22 @@ class Tokenizer():
 							stem_word[each_token]=each_token
 		return stem_word
 
+	def concordance(self,word):
+		self.generate_sentences()
+		sentence=self.sentences
+		concordance_sent=[]
+		for each in sentence:
+			#print each
+			each=each.encode('utf-8')
+			if word in each:
+				#print 'h'
+				concordance_sent.append(each)
+		return concordance_sent
+
+def print_sentence(sent):
+	print (sent.decode('utf-8'))
+
+
 t=Tokenizer('भारत का काफी-काफी समृद्ध-एवं विस्तृत है।पुलिस की प्रवक्ता के मुताबिक़ हम्बर्गर मॉर्गनपोस्ट अखबार की इमारत पर पहले खिड़की से पत्थर फेंके गए और फिर एक जलती हुई मसाल फेंकी गई। इससे इमारत की निचली मंजिल के दो कमरों को नुकसान पहुंचा है। हालांकि सूत्रों की मानें तो आग पर तुरंत काबू पा लिया गया।')
 t.generate_sentences()
 sen=t.sentences
@@ -106,5 +126,10 @@ s=t.generate_stem_word()
 print 'generating stem words'
 for i in s.keys():
 	print i.encode('utf-8'),' - ', s[i].encode('utf-8')
+w='काफी'
+x=t.concordance(w)
+for i in x:
+	print_sentence(i)
+
 
 
